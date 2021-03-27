@@ -1,93 +1,93 @@
 package com.jayian.businesscard.service.ocr;
 
-import java.awt.*;
+import com.google.cloud.vision.v1.*;
+import com.google.protobuf.ByteString;
+import com.jayian.businesscard.common.dto.CommonExtends;
+import org.springframework.stereotype.Service;
+
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class GoogleVisionApi {
+@Service
+public class GoogleVisionApi extends CommonExtends {
 
-    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(GoogleVisionApi.class);
-
-
-
-    /*
-     * @comment		:	이미지 파일의 경로를 통해 이미지 객체를 생성하는 메소드
-     * @param		:	이미지 객체를 만들 이미지 파일의 경로
+    /**
+     * make Image Data
+     * @param filePath
+     * @return
+     * @throws IOException
      */
-    private static Image getImage(String filePath) throws IOException {
+    private Image generateImage(String filePath) throws IOException {
+
+        logger.debug("File Path : {}", filePath);
 
         Image image;
 
-        // GCS에서 이미지를 가져올때 image 생성
+        // Image from GCS
         if (filePath.startsWith("gs://")) {
 
-//        	logger.info("gs");
-            ImageSource imgSource = ImageSource.newBuilder().setGcsImageUri(filePath).build();
-            image = Image.newBuilder().setSource(imgSource).build();
+            ImageSource imgSource = ImageSource.newBuilder()
+                                        .setGcsImageUri(filePath)
+                                        .build();
+            image = Image.newBuilder()
+                        .setSource(imgSource)
+                        .build();
         }
-        //	로컬에서 이미지를 가져올때 image 생성
+        // Image from Local
         else {
 
-//        	logger.info("local : " + filePath);
             ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
             image = Image.newBuilder().setContent(imgBytes).build();
         }
 
         return image;
-
     }
 
 
-
-    /*
-     * @comment		:	OCR분석하는 메소드
-     * @param		:	OCR분석을 위한 이미지의 경로
+    /**
+     * detect text from image
+     * @param filePath
+     * @return
+     * @throws Exception
      */
-    public static String detectText(String filePath) throws Exception {
+    public String detectTextFromImage(String filePath) throws Exception {
 
-        String detectText = "";
+        logger.debug("File Path : {}", filePath);
 
-        List<AnnotateImageRequest> requests = new ArrayList<>();
-        Image image = getImage(filePath);							// 이미지 객체 생성
+        String detectText = null;
 
-//	    URL url = new URL("http://www.mkyong.com/image/mypic.jpg");
-//	    java.awt.Image image = ImageIO.read(url);
+        Image image = this.generateImage(filePath);
 
-        Feature feature = Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build();
-        AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feature).setImage(image).build();
-        requests.add(request);
+        Feature feature = Feature.newBuilder()
+                            .setType(Feature.Type.TEXT_DETECTION)
+                            .build();
+        AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
+                            .addFeatures(feature)
+                            .setImage(image)
+                            .build();
 
         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
 
-            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
-            List<AnnotateImageResponse> responses = response.getResponsesList();
+            BatchAnnotateImagesResponse response = client.batchAnnotateImages(Collections.singletonList(request));
+            List<AnnotateImageResponse> responseList = response.getResponsesList();
 
-            for (AnnotateImageResponse res : responses) {
+            for (AnnotateImageResponse res : responseList) {
 
                 if (res.hasError()) {
-
                     detectText = res.getError().getMessage();
-//	                logger.info("Error: " + detectText);
+	                logger.error("Detect OCR Error : {}", detectText);
+	                break;
                 }
-
                 // For full list of available annotations, see http://g.co/cloud/vision/docs
-//	            for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-//
-//	            	logger.info("Text: " + annotation.getDescription());
-//	            	logger.info("Position : " + annotation.getBoundingPoly());
-//	            }
                 detectText = res.getTextAnnotationsList().get(0).getDescription();
-//	            logger.info(detectText);
+	            logger.debug("Detect OCR Text : {}", detectText);
             }
         }
 
         return detectText;
-
     }
-
-
-
 
 }
 
