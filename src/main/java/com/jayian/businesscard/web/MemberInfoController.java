@@ -1,43 +1,51 @@
 package com.jayian.businesscard.web;
 
-/*
- * @comment
- */
-
+import com.jayian.businesscard.common.dto.CommonExtends;
+import com.jayian.businesscard.domain.member.Member;
+import com.jayian.businesscard.service.member.MemberService;
+import com.jayian.businesscard.web.dto.MemberDto;
+import com.jayian.businesscard.web.dto.MyCardInfoVO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+
+@RequiredArgsConstructor
 @Controller
-@RequestMapping("users")
-@SessionAttributes("user")
-public class UserInfoController {
+public class MemberInfoController extends CommonExtends {
 
-    @Inject
-    private UserInfoDAO userDao;
+    private final MemberService memberService;
 
-//	@Inject
-//		private YourCardInfoDAO yourCardInfoDAO;
-
-    @Inject
-    private JavaMailSender mailSender;
-
-    private static final Logger logger = LoggerFactory.getLogger(UserInfoController.class);
     private final String admin = "arisol342@gmail.com";	// 관리자 계정
     private final String serverAddress = "http://203.233.199.165:8888/www/";	// Server Address
 
-    //	final String uploadPath = "/BusinessCardProject/management/temp/";
-    /*
-     * @comment				: 회원 가입 페이지 이동
-     * @param	joinUser	:
-     * @author				: 정보승
-     */
-    @RequestMapping(value="join", method=RequestMethod.GET)
-    public String userJoinForm(UserInfoVO joinUser, Model model) {
+    @GetMapping("/api/v1/member/register/")
+    public String registerMember(Model model) {
 
-        logger.info("Move Join Form");
+        logger.debug("Move Register Member Page");
 
-        return "sign/sign";
+        return "register_member";
+    }
+
+    @PostMapping("/api/v1/member/register/")
+    @ResponseBody
+    public ResponseEntity<?> registerMember(@RequestBody MemberDto memberDto) {
+
+        logger.debug("Register Member ID : {}", memberDto.getMemberId());
+
+        Member save = memberDto.saveMember();
+        // TODO Password Process
+        Map<String, Long> result = new HashMap<>();
+        result.put("memberSn", memberService.saveMember(save).getMemberSn());
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     /*
@@ -46,7 +54,7 @@ public class UserInfoController {
      * @author				: 정보승
      */
     @RequestMapping(value="join", method=RequestMethod.POST)
-    public String userJoin(UserInfoVO joinUser, HttpSession session, Model model) throws MessagingException, UnsupportedEncodingException {
+    public String userJoin(MemberDto joinUser, HttpSession session, Model model) throws MessagingException, UnsupportedEncodingException {
 
         logger.info("User Join Start");
 
@@ -126,7 +134,7 @@ public class UserInfoController {
      * @author				: 정보승
      */
     @RequestMapping(value="login", method=RequestMethod.POST)
-    public String userLogin(UserInfoVO loginInfo, HttpSession session, Model model) {
+    public String userLogin(MemberDto loginInfo, HttpSession session, Model model) {
 
         logger.info("User Loing Start");
         session.removeAttribute("verifyMsg");
@@ -136,7 +144,7 @@ public class UserInfoController {
         userAccount.put("userpw", loginInfo.getUserpw());
 
         // DAO를 통해 받은 User의 정보를 user 객체에 저장
-        UserInfoVO user = userDao.selectUser(userAccount);
+        MemberDto user = userDao.selectUser(userAccount);
         char userVerified = (user != null) ? user.getEmailverify() : 'N';	// E-mail 인증 여부
 
         // E-mail 인증까지 모두 마친 로그인
@@ -203,7 +211,7 @@ public class UserInfoController {
         findTemp.put("userid", userid);
         findTemp.put("findPW", userid + username);
 
-        UserInfoVO findPwResult = userDao.selectUser(findTemp);
+        MemberDto findPwResult = userDao.selectUser(findTemp);
 
 
         if(findPwResult.getUsername().equals(username)) {
