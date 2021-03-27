@@ -1,52 +1,52 @@
 package com.jayian.businesscard.service.businesscard;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Service;
+import com.jayian.businesscard.domain.businesscard.BusinessCard;
 
-import java.util.HashMap;
+import java.util.List;
 
 public interface BusinessCardService {
 
-    // 정현수 : 내 명함 등록
-    public void insertMyCard (MyCardInfoVO mycard);
+    default BusinessCard saveBusinessCard(BusinessCard businessCard) {
+        return null;
+    }
 
-    // 정보승	:	내 명함 추가 정보 등록
-    public int updateAddMyCard(MyCardInfoVO mycard);
+    default boolean deleteBusinessCard(Long businessCardSn) {
+        return false;
+    }
 
-    // 정보승 : 등록한 내 명함 전체 조회
-    public ArrayList<MyCardInfoVO> selectAllMyCard(String userid) throws DataAccessException;
+    default Integer deleteBusinessCards(Long memberSn, List<Long> businessCardSnList) {
+        return -1;
+    }
 
-    // 정보승 : 등록한 내 명함 하나 조회
-    public MyCardInfoVO selectOneMyCard(HashMap<String, Object> myCard);
+    default BusinessCard getMyRepBusinessCard(Long memberSn) {
+        return null;
+    }
 
-    // 정보승 : 내 명함 하나 삭제
-    public int deleteMyCard (HashMap<String, Object> deleteMyCard);
+    default List<BusinessCard> getAllMemberBusinessCards(Long memberSn) {
+        return null;
+    }
 
-    // 정보승 : 받은 명함 전체 가져오기
-    public ArrayList<YourCardInfoVO> selectAllCard(String userid);
+    default Integer getAllMemberBusinessCardsCnt(Long memberSn) {
+        return -1;
+    }
 
-    // 정보승 : (모바일용) 받은 명함 전체 가져오기
-    public ArrayList<YourCardInfoVO> mSelectAllCard (String userid);
+    default List<BusinessCard> getAllMyBusinessCards(Long memberSn) {
+        return null;
+    }
 
-    // 정보승 : 최근 받은 명함 5개 가져오기
-    public ArrayList<YourCardInfoVO> recent5YourCard (String userid, RowBounds rb);
+    default Integer getAllMyBusinessCardsCnt(Long memberSn) {
+        return -1;
+    }
 
-    // 정보승 : 받은 명함 등록 갯수 조회
-    public int cntYourCard(String userid);
+    default List<BusinessCard> getAllReceivedAllBusinessCards(Long memberSn) {
+        return null;
+    }
 
-    // 정보승 : 받은 명함 등록
-    public int yourCardInsert(YourCardInfoVO insertYourCardInfo);
+    default Integer getAllReceivedAllBusinessCardsCnt(Long memberSn) {
+        return -1;
+    }
 
-
-    // 정보승 : 하나의 명함 정보 선택
-    public YourCardInfoVO selectYourCardOne(HashMap<String, String> selectYourCard);
-
-    // 정보승 : 명함 삭제(1개)
-    public int deleteYourCardOne(HashMap<String, String> deleteYourCard);
-
-    // 정보승 : 명함 수정(1개)
-    public int updaetYourCardOne(YourCardInfoVO updateYourCard);
-
-    // 전병익 : 검색한 명함 리스트를 가져옴
-    public ArrayList<YourCardInfoVO> selectSearchCard(HashMap<String, String> autoComplete);
+    default List<BusinessCard> searchBusinessCards(Long memberSn) {
+        return null;
+    }
 }
