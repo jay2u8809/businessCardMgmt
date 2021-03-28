@@ -1,10 +1,9 @@
 package com.jayian.businesscard.common;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class WebExceptionHandler {
 
     @ExceptionHandler(Exception.class)

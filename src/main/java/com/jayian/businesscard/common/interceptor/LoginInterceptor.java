@@ -2,13 +2,13 @@ package com.jayian.businesscard.common.interceptor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LoginInterceptor extends HandlerInterceptorAdapter {
+public class LoginInterceptor implements HandlerInterceptor {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 
@@ -32,7 +32,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         }
 
         //로그인 된 경우 요청한 경로로 진행
-        return super.preHandle(request, response, handler);
+        return true;
     }
 
 }

@@ -1,0 +1,156 @@
+
+
+/*/////////////////////////////
+button sivir
+/////////////////////////////*/
+
+.sivir {
+	height: 15vh;
+	width: 100%;
+	position: relative;
+}
+
+.sivir h2 {
+	color: #000000;
+}
+
+.button-cont {
+	position: absolute;
+	top: 250px;
+	left: 165px;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	width: 200px;
+	height: 100px;
+	text-align: center;
+}
+
+.button-sivir {
+	position: relative;
+	background-color: #15b06c;
+	border: 4px solid #15b06c;
+	box-shadow: none;
+	height: 100px;
+	width: 200px;
+	border-radius: 50px;
+	font-family: 'montserrat';
+	text-transform: uppercase;
+	color: #fff;
+	z-index: 2;
+	cursor: pointer;
+	box-sizing: border-box;
+	box-shadow: 0 5px 40px rgba(0, 0, 0, 0.2);
+	transition: width linear 0.3s;
+}
+
+.button-sivir:hover {
+	background-color: #53CE98;
+}
+
+.button-sivir:focus {
+	background-color: #53CE98;
+	outline: none;
+	transition: all linear 0.3s;
+	color: #237D56;
+	border: 4px solid rgba(255,255,255,0.5);
+	width: 100px;
+}
+
+svg {
+	width: 102px;
+	position: absolute;
+	top: calc(50% - 51px);
+	left: calc(50% - 51px);
+	z-index: 1;
+	transition: all linear 0.3s;
+	transform-origin: 50% 50%;
+	transform: rotate(-90deg);
+}
+
+#loader {
+	position: absolute;
+	fill: transparent;
+	stroke: #15b06c;
+	stroke-miterlimit: 10;
+	stroke-width: 4px;
+	stroke-dasharray: 0, 280;
+}
+
+.zindex {
+	z-index: 3;
+}
+
+.loading {
+	animation: loading 3s forwards;
+	animation-delay: 0.4s;
+}
+
+#sent,
+#error {
+	fill: transparent;
+}
+
+@keyframes loading {
+	0% {
+		transition: all linear 0.3s;
+		stroke-dasharray: 0, 280;
+	}
+	5% {
+		transition: all linear 0.3s;
+		stroke-dasharray: 0, 280;
+	}
+	100% {
+		transition: all linear 0.3s;
+		stroke-dasharray: 280, 280;
+	}
+}
+
+
+/*/////////////////////////////
+button sivir
+/////////////////////////////*/
+
+
+/*/////////////////////////////
+button singed
+/////////////////////////////*/
+.button-singed{
+	cursor:pointer;
+}
+.singed {
+	background: aquamarine;
+	height: 90vh;
+	width: 100%;
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.singed-svg {
+	transform: rotate(0deg);
+}
+
+.bsinged{
+	fill:;
+}
+
+#tick {
+    fill: none;
+    stroke: #FF00EC;
+    stroke-linejoin: round;
+    stroke-width: 4px;
+    stroke-dasharray: 66, 420;
+    stroke-dashoffset: 66;
+}
+
+.stroke-tick{
+	stroke-dashoffset: -394 !important;
+	transition:all cubic-bezier(0, 0, 0.76, 0.24) 1s !important;
+}
+
+.shopper{
+	fill:#fff;
+}
+
+/*/////////////////////////////
+/button singed
+/////////////////////////////*/
