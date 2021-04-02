@@ -57,7 +57,7 @@ public class BusinessCard extends BaseEntity {
     private UseYN useYn = UseYN.N;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "use_yn", nullable = false, length = 1)
+    @Column(name = "own_businesscard_yn", nullable = false, length = 1)
     private YN ownBusinessCardYn = YN.N;
 
     @Column(name = "sort_order", nullable = false)
