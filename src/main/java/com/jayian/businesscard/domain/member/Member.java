@@ -36,7 +36,7 @@ public class Member extends BaseEntity {
     private String memberPassword;
 
     @Embedded
-    private EmbeddedName memberName;
+    private EmbeddedName memberName = new EmbeddedName();
 
     @Enumerated(EnumType.STRING)
     @Column(name = "email_verify_yn", nullable = false, length = 1)

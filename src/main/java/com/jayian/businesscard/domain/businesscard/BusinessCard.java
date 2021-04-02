@@ -65,14 +65,14 @@ public class BusinessCard extends BaseEntity {
 
     @Embedded
     @AttributeOverrides({ @AttributeOverride(name = "phoneNo", column = @Column(name = "phone_no")) })
-    private EmbeddedTel phoneNo;
+    private EmbeddedTel phoneNo = new EmbeddedTel();
 
     @Embedded
-    @AttributeOverrides({ @AttributeOverride(name = "faxNo", column = @Column(name = "fax_no")) })
-    private EmbeddedTel faxNo;
+    @AttributeOverrides({ @AttributeOverride(name = "phoneNo", column = @Column(name = "fax_no")) })
+    private EmbeddedTel faxNo = new EmbeddedTel();
 
     @Embedded
     @AttributeOverrides({ @AttributeOverride(name = "repAddress", column = @Column(name = "rep_address")) })
-    private EmbeddedAddress repAddress;
+    private EmbeddedAddress repAddress = new EmbeddedAddress();
 
 }

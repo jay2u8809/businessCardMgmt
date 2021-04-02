@@ -1,0 +1,57 @@
+# Server
+server:
+  port: 8080
+
+# Spring
+spring:
+  # DB
+  database: h2
+  datasource:
+    schema: classpath*:db/${database}/schema.sql
+    data: classpath*:db/${database}/data.sql
+
+  # JPA
+  jpa:
+    properties:
+      hibernate:
+        # Query log를 MySql버전으로 표시 https://docs.jboss.org/hibernate/orm/5.4/javadocs/org/hibernate/dialect/package-summary.html, https://055055.tistory.com/83
+        dialect : org.hibernate.dialect.PostgreSQL10Dialect
+      ddl-auto: none
+    open-in-view: false
+    show_sql: true        # display JPA SQL
+
+  h2:
+    console:
+      enabled: true
+
+  # Web
+  thymeleaf:
+    mode: HTML
+    # template cache setting
+    cache: false
+    # templates classpath setting
+    prefix: classpath:/templates/r/
+
+  # Internationalization
+  messages:
+    basename: messages/messages
+
+  resources:
+    # static classpath setting
+    static-locations: classpath:/static/resources/
+
+
+# Web
+web:
+  ## no image file path
+  noimg-url: /noimg/
+
+
+# Logging
+logging:
+  level:
+    org.springframework: DEBUG
+    org.springframework.web: DEBUG
+
+# OpenApi Info
+open-api:
