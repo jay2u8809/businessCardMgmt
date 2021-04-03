@@ -39,10 +39,10 @@ public class Member extends BaseEntity {
     private EmbeddedName memberName = new EmbeddedName();
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "email_verify_yn", nullable = false, length = 1)
+    @Column(name = "email_verify_yn", length = 1)
     private YN emailVerifyYn = YN.N;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "withdrawal_yn", nullable = false, length = 1)
+    @Column(name = "withdrawal_yn", length = 1)
     private UseYN withdrawalYn = UseYN.N;
 }

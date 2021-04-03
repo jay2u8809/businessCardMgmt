@@ -5,7 +5,6 @@ import com.jayian.businesscard.common.dto.CommonExtends;
 import com.jayian.businesscard.domain.businesscard.BusinessCard;
 import com.jayian.businesscard.domain.businesscard.BusinessCardRepository;
 import com.jayian.businesscard.domain.businesscard.QBusinessCard;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class BusinessCardServiceImpl extends CommonExtends implements BusinessCa
 
     private final BusinessCardRepository businessCardRepository;
 
-    private final JPAQueryFactory jpaQueryFactory;
+    private final JPAQueryFactory factory;
 
     @Override
     public BusinessCard saveBusinessCard(BusinessCard businessCard) {
@@ -36,7 +35,7 @@ public class BusinessCardServiceImpl extends CommonExtends implements BusinessCa
 
         if (deleteBusinessCard == null) return false;
 
-        deleteBusinessCard.setUseYn(UseYN.Y);
+        deleteBusinessCard.setUseYn(UseYN.N);
         businessCardRepository.save(deleteBusinessCard);
 
         return true;
@@ -46,11 +45,13 @@ public class BusinessCardServiceImpl extends CommonExtends implements BusinessCa
     public Integer deleteBusinessCards(Long memberSn, List<Long> businessCardSnList) {
 
         QBusinessCard qBusinessCard = QBusinessCard.businessCard;
-        JPAQuery<BusinessCard> query = (JPAQuery<BusinessCard>) jpaQueryFactory.query();
 
-        List<BusinessCard> deleteBusinessCarsList = query.select(qBusinessCard)
+        List<BusinessCard> deleteBusinessCarsList = factory.query()
+                .select(qBusinessCard)
                 .from(qBusinessCard)
-                .where(qBusinessCard.member.memberSn.eq(memberSn))
+                .where(qBusinessCard.member.memberSn.eq(memberSn)
+                        .and(qBusinessCard.businessCardSn.in(businessCardSnList))
+                        .and(qBusinessCard.useYn.eq(UseYN.Y)))
                 .fetch();
 
         if (ObjectUtils.isEmpty(deleteBusinessCarsList)) return 0;

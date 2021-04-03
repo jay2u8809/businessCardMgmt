@@ -36,16 +36,16 @@ public class BusinessCard extends BaseEntity {
     @Column(name = "company_name", nullable = false, length = 100)
     private String companyName;
 
-    @Column(name = "company_job", nullable = false, length = 100)
+    @Column(name = "company_job", length = 100)
     private String companyJob;
 
-    @Column(name = "company_department", nullable = false, length = 100)
+    @Column(name = "company_department", length = 100)
     private String companyDepartment;
 
     @Column(name = "email_address", nullable = false, length = 50)
     private String emailAddress;
 
-    @Column(name = "memo", nullable = false, length = 200)
+    @Column(name = "memo", length = 200)
     private String memo;
 
     @Enumerated(EnumType.STRING)
@@ -54,7 +54,7 @@ public class BusinessCard extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "use_yn", nullable = false, length = 1)
-    private UseYN useYn = UseYN.N;
+    private UseYN useYn = UseYN.Y;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "own_businesscard_yn", nullable = false, length = 1)

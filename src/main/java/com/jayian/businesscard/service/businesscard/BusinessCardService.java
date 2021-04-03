@@ -6,14 +6,30 @@ import java.util.List;
 
 public interface BusinessCardService {
 
+    /**
+     * Save a Business Card
+     * @param businessCard
+     * @return
+     */
     default BusinessCard saveBusinessCard(BusinessCard businessCard) {
         return null;
     }
 
+    /**
+     * Delete a Business Card
+     * @param businessCardSn
+     * @return
+     */
     default boolean deleteBusinessCard(Long businessCardSn) {
         return false;
     }
 
+    /**
+     * Delete Business Cards
+     * @param memberSn
+     * @param businessCardSnList
+     * @return
+     */
     default Integer deleteBusinessCards(Long memberSn, List<Long> businessCardSnList) {
         return -1;
     }
