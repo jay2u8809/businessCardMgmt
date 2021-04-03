@@ -18,8 +18,8 @@ public interface MemberService {
      * @param memberSn
      * @return
      */
-    default boolean withdrawMember(Long memberSn) {
-        return false;
+    default Long withdrawMember(Long memberSn) {
+        return -1L;
     }
 
 }

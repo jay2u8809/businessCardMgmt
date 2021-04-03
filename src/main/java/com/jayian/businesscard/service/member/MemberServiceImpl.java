@@ -17,21 +17,18 @@ public class MemberServiceImpl extends CommonExtends implements MemberService {
 
     @Override
     public Member saveMember(Member member) {
-
         return memberRepository.save(member);
     }
 
     @Override
-    public boolean withdrawMember(Long memberSn) {
+    public Long withdrawMember(Long memberSn) {
         Member withdrawalMember = memberRepository.findById(memberSn)
                                                 .orElse(null);
 
-        if (withdrawalMember == null)   return false;
+        if (withdrawalMember == null)   return 0L;
 
         withdrawalMember.setWithdrawalYn(UseYN.Y);
-        memberRepository.save(withdrawalMember);
-
-        return true;
+        return memberRepository.save(withdrawalMember).getMemberSn();
     }
 
 }
