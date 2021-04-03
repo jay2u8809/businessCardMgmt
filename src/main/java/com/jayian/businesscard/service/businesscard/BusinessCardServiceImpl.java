@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,9 +20,6 @@ import java.util.List;
 public class BusinessCardServiceImpl extends CommonExtends implements BusinessCardService {
 
     private final BusinessCardRepository businessCardRepository;
-
-    @PersistenceContext
-    private final EntityManager em;
 
     private final JPAQueryFactory jpaQueryFactory;
 
