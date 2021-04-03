@@ -22,4 +22,13 @@ public interface MemberService {
         return -1L;
     }
 
+    /**
+     * Get a Member Data
+     * @param memberSn
+     * @return
+     */
+    default Member getNormalMember(Long memberSn) {
+        return new Member();
+    }
+
 }

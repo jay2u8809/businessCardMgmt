@@ -46,7 +46,7 @@ public class BusinessCardServiceImplTest extends CommonExtends {
     @BeforeEach
     public void preProcess() {
         businessCardService = new BusinessCardServiceImpl(businessCardRepository, factory);
-        memberService = new MemberServiceImpl(memberRepository);
+        memberService = new MemberServiceImpl(memberRepository, factory);
         dummy = this.generateBusinessCardsDummy();
     }
 

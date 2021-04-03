@@ -2,7 +2,9 @@ package com.jayian.businesscard.domain.member;
 
 import com.jayian.businesscard.common.code.UseYN;
 import com.jayian.businesscard.common.code.YN;
+import com.jayian.businesscard.common.dto.EmbeddedAddress;
 import com.jayian.businesscard.common.dto.EmbeddedName;
+import com.jayian.businesscard.common.dto.EmbeddedTel;
 import com.jayian.businesscard.domain.BaseEntity;
 import com.jayian.businesscard.domain.businesscard.BusinessCard;
 import lombok.Getter;
@@ -45,4 +47,10 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "withdrawal_yn", length = 1)
     private UseYN withdrawalYn = UseYN.N;
+
+    @Embedded
+    private EmbeddedAddress memberAddress = new EmbeddedAddress();
+
+    @Embedded
+    private EmbeddedTel memberTel = new EmbeddedTel();
 }

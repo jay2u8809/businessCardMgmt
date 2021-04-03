@@ -38,7 +38,7 @@ class MemberServiceImplTest extends CommonExtends {
 
     @BeforeEach
     public void preProcess() {
-        memberService = new MemberServiceImpl(memberRepository);
+        memberService = new MemberServiceImpl(memberRepository, factory);
         this.dummyMembers = this.generateMembersDummy();
     }
 
