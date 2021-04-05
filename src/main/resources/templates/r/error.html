@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="en">
+<head th:replace="common/common_header :: header_parts()">
+</head>
+<body>
+<div class="error_div">
+  <img class="error" th:src="@{/img/error/error_page.png}"/>
+</div>
+<footer>
+  <th:block th:replace="common/common_footer :: footer_parts()">
+  </th:block>
+</footer>
+</body>
+</html>

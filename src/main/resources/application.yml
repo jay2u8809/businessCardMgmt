@@ -38,7 +38,7 @@ spring:
 
   resources:
     # static classpath setting
-    static-locations: classpath:/static/resources/
+    static-locations: classpath:/static/r/
 
 
 # Web

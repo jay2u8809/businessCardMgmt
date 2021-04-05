@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="en">
+<head th:replace="common/common_header :: header_parts()">
+
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" th:href="@{/style/component.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/style/link_hover_basic.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/style/link_hover.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/style/logoutbutton.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/style/logoutbutton_default.css}">
+
+</head>
+<body class="demo-1">
+	<header class="codrops-header">
+		<div class="codrops-links">
+			<th:block th:if="${loginFlag == true}" >
+					<a class=""  href="users/join">Register</a>
+					<a class=""  href="users/loginForm">Login</a>
+			</th:block>
+			<th:block th:if="${loginFlag == false}" >
+					<pre class=""> [[${memberName}]]	</pre>
+					<a class="" style="cursor:pointer;" id="commonLogoutBtn">Logout</a>
+			</c:choose>
+			</th:block>
+		</div> 
+	</header>
+	<!-- logo -->
+	<div class="logoBox"><img class="logo" th:src="@{/img/logo/ArisoruLogo(Big).png}" /></div>
+	<div class="videoBox">
+		<video autoplay loop="100" muted  id="videoBG">
+			<source th:src="@{/img/tutorial.mp4}" type="video/mp4">
+		</video>
+	</div>
+	<button class="btn btn--menu">
+		<svg class="icon icon--menu"><use xlink:href="#icon-menu"></use></svg>
+		<svg class="icon icon--cross"><use xlink:href="#icon-cross"></use></svg>
+	</button>
+	<nav class="tabsnav tabsnav--vertical tabsnav--ander">
+		<div class="tabsnav__item">
+			<div class="tabsnav__bar"></div>
+			<h3 class="tabsnav__title">TemplateList</h3>
+		</div>
+		<div class="tabsnav__item">
+			<div class="tabsnav__bar"></div>
+			<h3 class="tabsnav__title">Tools</h3>
+		</div>
+		<div class="tabsnav__item">
+			<div class="tabsnav__bar"></div>
+			<h3 class="tabsnav__title">Myinfo</h3>
+		</div>
+		<div class="tabsnav__item">
+			<div class="tabsnav__bar"></div>
+			<h3 class="tabsnav__title">Contact</h3>
+		</div>
+	</nav>
+	<div class="logout">
+		<button class="btn-5" id=logoutBtn>Logout</button>
+	</div>
+	<div class="tabscontent">
+		<div class="tabscontent__item">
+			<figure class="poster">
+				<img class="poster__img" th:src="@{/img/home/background_img1.jpg}" alt="Poster 1"/>
+				<figcaption class="poster__caption">
+					<h2 class="poster__title" >TemplateList</h2>
+					<p class="poster__deco">Choose a simple template</p>
+					<div class="poster__box"></div>
+					<span class="poster__number"><i class="fas fa-location-arrow"></i></span>
+				</figcaption>
+			</figure>
+			<div class="cl-effect-21">
+				<a href="/www/templateList">TemplateList</a>
+			</div>
+		</div>
+		<div class="tabscontent__item">
+			<figure class="poster">
+				<img class="poster__img" th:src="@{/img/home/background_img1.jpg}" alt="Poster 1"/>
+				<figcaption class="poster__caption">
+					<h2 class="poster__title">Tools</h2>
+					<p class="poster__deco">명함 만들기</p>
+					<div class="poster__box"></div>
+					<span class="poster__number"><i class="fas fa-location-arrow"></i></span>
+					</figcaption>
+				</figure>
+				<div class="cl-effect-21">
+					<a href="/www/tool">Tools</a>
+				</div>
+			</div>
+			<div class="tabscontent__item">
+				<figure class="poster">
+					<img class="poster__img" th:src="@{/img/home/background_img1.jpg}" alt="Poster 1"/>
+					<figcaption class="poster__caption">
+						<h2 class="poster__title">MyInfo</h2>
+						<p class="poster__deco">카드관리</p>
+						<div class="poster__box"></div>
+						<span class="poster__number" ><i class="fas fa-location-arrow"></i></span></a>
+					</figcaption>
+				</figure>
+				<div class="cl-effect-21">
+					<a href="/www/myInfo">MyInfo</a>
+				</div>
+			</div>
+			<div class="tabscontent__item">
+				<figure class="poster">
+					<img class="poster__img" th:src="@{/img/home/background_img1.jpg}" alt="Poster 1"/>
+					<figcaption class="poster__caption">
+						<h2 class="poster__title">Contact</h2>
+						<p class="poster__deco">공지사항</p>
+						<div class="poster__box"></div>
+						<span class="poster__number" href="/www/contact"><i class="fas fa-location-arrow"></i></span>
+					</figcaption>
+				</figure>
+				<div class="cl-effect-21">
+					<a href="/www/contact">Contact</a>
+				</div>
+			</div>
+			<button class="btn btn--back"><i class="fas fa-angle-left"></i></button>
+		</div>
+	</div>
+
+	<footer>
+		<th:block th:replace="common/common_footer :: footer_parts()">
+			<script th:src="@{/js/common/anime.min.js}"></script>
+			<script th:src="@{/js/common/enquire.min.js}"></script>
+			<script th:src="@{/js/common/tabsnav.js}"></script>
+			<script th:src="@{/js/common/demo1.js}"></script>
+			<script th:src="@{/js/home/home.js}"></script>
+		</th:block>
+	</footer>
+</body>
+</html>
