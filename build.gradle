@@ -1,0 +1,94 @@
+buildscript {
+    ext {
+        springBootVersion = '2.4.4'
+        queryDslVersion = '4.2.1'
+        googleCloudVisionApiVersion = '1.102.0'
+        queryDslVersion = '4.1.4'
+    }
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'war'
+}
+
+group = 'com.jayian'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring Boot
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    // QueryDsl
+    implementation group: 'com.querydsl', name: 'querydsl-jpa', version: queryDslVersion    // https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa
+    implementation group: 'com.querydsl', name: 'querydsl-apt', version: queryDslVersion    // https://mvnrepository.com/artifact/com.querydsl/querydsl-apt
+    implementation group: 'com.querydsl', name: 'querydsl-core', version: queryDslVersion   // https://mvnrepository.com/artifact/com.querydsl/querydsl-core
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    // DB
+    runtimeOnly 'com.h2database:h2'
+    // Google Cloud Vision Api
+    implementation group: 'com.google.cloud', name: 'google-cloud-vision', version: googleCloudVisionApiVersion   // https://mvnrepository.com/artifact/com.google.cloud/google-cloud-vision
+
+    // Test
+//    implementation 'junit:junit:4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+configure("businessCardMgmt") {
+    apply plugin: "io.spring.dependency-management"
+
+    dependencies {
+        compile("com.querydsl:querydsl-core")
+        compile("com.querydsl:querydsl-jpa")
+
+        // Specify to use querydsl JPAAnnotationProcessor
+        annotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+        // Error Handle : java.lang.NoClassDefFoundError(javax.annotation.Entity)
+        annotationProcessor("jakarta.persistence:jakarta.persistence-api")
+        // Error Handle : java.lang.NoClassDefFoundError(javax.annotation.Generated)
+        annotationProcessor("jakarta.annotation:jakarta.annotation-api")
+    }
+
+    // Remove QClass
+    clean {
+        // IntelliJ Annotation processor result path
+//        delete file('src/main/java/genq')
+    }
+
+    // Remove Annotation processor result directory∂
+    task cleanGeneatedDir(type: Delete) {
+//        delete file('src/main/java/genq')
+    }
+}
