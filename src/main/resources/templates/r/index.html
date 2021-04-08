@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:lang="en">
-<head th:replace="common/common_header :: header_parts()">
-
+<head>
+	<th:block th:replace="common/common_header :: header_parts()" />
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" th:href="@{/style/component.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/style/link_hover_basic.css}">
 	<link rel="stylesheet" type="text/css" th:href="@{/style/link_hover.css}">
 	<link rel="stylesheet" type="text/css" th:href="@{/style/logoutbutton.css}">
-	<link rel="stylesheet" type="text/css" th:href="@{/style/logoutbutton_default.css}">
-
 </head>
 <body class="demo-1">
 	<header class="codrops-header">
 		<div class="codrops-links">
-			<th:block th:if="${loginFlag == true}" >
+			<th:block th:if="${loginFlag == false}" >
 					<a class=""  href="users/join">Register</a>
 					<a class=""  href="users/loginForm">Login</a>
 			</th:block>
-			<th:block th:if="${loginFlag == false}" >
+			<th:block th:if="${loginFlag == true}" >
 					<pre class=""> [[${memberName}]]	</pre>
 					<a class="" style="cursor:pointer;" id="commonLogoutBtn">Logout</a>
 			</c:choose>
@@ -53,9 +51,6 @@
 			<h3 class="tabsnav__title">Contact</h3>
 		</div>
 	</nav>
-	<div class="logout">
-		<button class="btn-5" id=logoutBtn>Logout</button>
-	</div>
 	<div class="tabscontent">
 		<div class="tabscontent__item">
 			<figure class="poster">
@@ -118,13 +113,13 @@
 	</div>
 
 	<footer>
-		<th:block th:replace="common/common_footer :: footer_parts()">
-			<script th:src="@{/js/common/anime.min.js}"></script>
-			<script th:src="@{/js/common/enquire.min.js}"></script>
-			<script th:src="@{/js/common/tabsnav.js}"></script>
-			<script th:src="@{/js/common/demo1.js}"></script>
-			<script th:src="@{/js/home/home.js}"></script>
-		</th:block>
+		<th:block th:replace="common/common_footer :: footer_parts()" />
+		<!-- JS -->
+		<script th:src="@{/js/common/anime.min.js}"></script>
+		<script th:src="@{/js/common/enquire.min.js}"></script>
+		<script th:src="@{/js/common/tabsnav.js}"></script>
+		<script th:src="@{/js/common/demo1.js}"></script>
+		<script th:src="@{/js/home/home.js}"></script>
 	</footer>
 </body>
 </html>
