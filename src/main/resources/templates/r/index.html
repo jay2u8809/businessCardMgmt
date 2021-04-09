@@ -13,7 +13,7 @@
 		<div class="codrops-links">
 			<th:block th:if="${loginFlag == false}" >
 					<a class=""  href="users/join">Register</a>
-					<a class=""  href="users/loginForm">Login</a>
+					<a class=""  href="/api/v1/guest/login/">Login</a>
 			</th:block>
 			<th:block th:if="${loginFlag == true}" >
 					<pre class=""> [[${memberName}]]	</pre>

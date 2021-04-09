@@ -1,8 +1,7 @@
 /**
- * 로그인 및 회원가입 및 비번 찾기
+ * Login and Register, reset password
  */
 
-// move input label function
 $(function() {
 
 	$('.input-container').find('input').on('keyup blur focus', function(e) {
@@ -45,7 +44,7 @@ $(function() {
 		}, "slow");
 	});
 
-	$("#loginButton").on("click",function(){
+	$("#loginBtn").on("click", () => {
 
         var loginForm = $("#loginForm");
         var userId = $("#userid").val();
@@ -106,3 +105,68 @@ $(function() {
         location.href="/www";  // 페이지 이동...
      }
 });
+
+
+const REGISTER_MEMBER = {
+    init: function() {
+        let self = this;
+
+        // login btn
+        $('#loginBtn').on('click', function() {
+            self.register()
+        });
+        // register btn
+        $('#registerBtn').on('click', function() {
+            self.register()
+        });
+    },
+    register: () => {
+
+        let emailReg = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
+
+        let registerForm = $("#registerForm");
+        let registerMemberName = $("#registerMemberName").val();
+        let registerMemberId = $("#registerMemberId").val();
+        let registerMemberPassword = $("#registerMemberPassword").val();
+
+        if (username.length == 0) {
+            alert("이름을 입력해주세요");
+            return false;
+        }
+
+        if (email.length == 0) {
+            alert('이메일을 입력해주세요');
+            return false;
+        }
+
+        if (!(emailReg.test(email))) {
+            alert("XXX@XXX.XXX 양식으로 작성해주세요");
+            return false;
+        }
+
+        if (password.length == 0 ) {
+            alert("비밀번호를 입력해주세요");
+            return false;
+        }
+
+        return true;
+        joinForm.submit();
+    },
+    cancelInput: () => {
+
+        let inputProductName = document.querySelector('#input-productName');
+        let inputProductDesc = document.querySelector('#input-productDesc');
+        let inputProductCode = document.querySelector('#input-productCode');
+        let inputProductPrice = document.querySelector('#input-productPrice');
+        let inputProductSalePrice = document.querySelector('#input-productSalePrice');
+
+        inputProductName.value = '';
+        inputProductDesc.value = '';
+        inputProductCode.value = '';
+        inputProductPrice.value = '';
+        inputProductSalePrice.value = '';
+    }
+
+};
+
+REGISTER_MEMBER.init();

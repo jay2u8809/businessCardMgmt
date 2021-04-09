@@ -40,6 +40,9 @@ public class Member extends BaseEntity {
     @Embedded
     private EmbeddedName memberName = new EmbeddedName();
 
+    @Column(name = "member_email", nullable = false, length = 50)
+    private String memberEmail;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "email_verify_yn", length = 1)
     private YN emailVerifyYn = YN.N;

@@ -3,182 +3,164 @@
 <head>
   <th:block th:replace="common/common_header :: header_parts()" />
   <!-- CSS -->
-  <link rel="stylesheet" type="text/css" th:href="@{/style/guest/sign.css}" />
-
-</head>
-
-  <script type="text/javascript">
-
-
-	<c:choose>
-		<c:when test="${verifyMsg eq 'emailVerify' }">
-			alert("인증을 위한 E-mail을 발송하였습니다.");
-			go_url();
-		</c:when>
-		<c:when test="${loginMsg eq 'emailFail' }">
-			alert("E-mail 인증이 완료되지 않았습니다.");
-			go_url();
-		</c:when>
-		<c:when test="${loginMsg eq 'passwordFail' }">
-			alert("로그인 정보가 일치하지 않습니다.");
-			go_url();
-		</c:when>
-
-		<c:otherwise>
-		</c:otherwise>
-	</c:choose>
-
-	function go_url(){
-
-	    location.href="/www";  // 페이지 이동...
-
-	 }
-
-	</script>
-</head>
+  <link rel="stylesheet" type="text/css" th:href="@{/style/guest/register.css}" />
 </head>
 <body>
-<!-- 수지 동영상 -->
-<div class="videoBox">
-  <video autoplay loop="100" muted  id="videoBG">
-    <source src="<c:url value="/resources/img/tutorial.mp4"/>" type="video/mp4">
-  </video>
-</div>
 
-<!-- 정현수가 넣음 - 아리소루 로고 -->
-<div class="logoBox"><img class="logo" src="<c:url value="/resources/img/ArisoruLogo(Big).png" />"/></div>
+  <!-- video file -->
+  <div class="videoBox">
+    <video autoplay loop="100" muted  id="videoBG">
+      <source th:src="@{/img/suzy.mp4}" type="video/mp4">
+    </video>
+  </div><!--// video file -->
 
-<!-- 알림 목적 -->
-<input type="hidden" id="loginIs" value="" />
+  <!-- logo img file -->
+  <div class="logoBox"><img class="logo" th:src="@{/img/logo/ArisoruLogo(Big).png}" /></div>
 
-<!-- 회원 로그인, 회원가입 부분 -->
-<div class="card-container">
+  <!-- 알림 목적 -->
+  <input type="hidden" id="loginIs" value="" />
 
-  <!-- 로그인, 회원가입 화면 전환 -->
-  <div class="toggle">
-    <i class="fa fa-user fa-pencil fa-lg"></i>
-    <div class="tooltip">Sign up</div>
-  </div>
+  <!-- register member and login -->
+  <div class="card-container">
 
-  <!-- 로그인 -->
-  <div class="card login-register login-reset">
-    <h1 class="title">Login</h1>
-    <form id="loginForm"  method="post" action="users/login">
-      <div class="input-container has-feedback">
-        <input type="text" id="userid" name="userid" placeholder="UserID"/>
-        <i	class="fa fa-user form-control-feedback"></i>
-        <div class="check"></div>
-        <div class="bar"></div>
-      </div>
-      <div class="input-container has-feedback">
-        <input type="password" id="userpw" name="userpw" placeholder="Password"/>
-        <i	class="fa fa-lock form-control-feedback"></i>
-        <div class="check"></div>
-        <div class="bar"></div>
-      </div>
+    <!-- change login to registration -->
+    <div class="toggle">
+      <i class="fa fa-user fa-pencil fa-lg"></i>
+      <div class="tooltip">Sign up</div>
+    </div><!--// change login to registration -->
 
-      <!-- 아이디 저장해놓기 -->
-      <div class="checkbox">
-        <label> <input type="checkbox" id="remember-me" checked>
-          <span class="cr"><i class="cr-icon fa fa-rocket"></i></span>
-          Remember me
-        </label>
-      </div><!-- 아이디 저장해놓기 end -->
+    <!-- login -->
+    <div class="card login-register login-reset">
+      <h1 class="title">Login</h1>
 
-      <!-- 로그인 버튼 -->
-      <div class="button-container">
-        <button id="loginButton" class="rkmd-btn btn-lightBlue ripple-effect float-right" type="submit">
-          <span>Sign in</span>
-        </button>
-      </div><!-- 로그인 버튼 end -->
+      <form id="loginForm"  method="post" action="/api/v1/guest/login/">
 
-      <!-- 비밀번호 찾기 -->
-      <div class="footer">
-        <a href="#">Forgot your password?</a>
-      </div><!-- 비밀번호 찾기 end -->
-    </form>
-  </div><!-- 로그인 end -->
+        <!-- user id -->
+        <div class="input-container has-feedback">
+          <input type="text" id="memberId" name="memberId" placeholder="UserID"/>
+          <i	class="fa fa-user form-control-feedback"></i>
+          <div class="check"></div>
+          <div class="bar"></div>
+        </div><!--// user id -->
 
-  <!-- 회원가입 -->
-  <div class="card login-register">
-    <h1 class="title">Create an account</h1>
-    <form id="joinForm" method="post" action="users/join" >
-      <!-- UserName -->
-      <div class="input-container has-feedback">
-        <input type="text" id="name" name="username" placeholder="Username"/>
-        <div class="check"></div>
-        <div class="bar"></div>
-      </div><!-- UserName end -->
+        <!-- user password -->
+        <div class="input-container has-feedback">
+          <input type="password" id="memberPassword" name="memberPassword" placeholder="Password"/>
+          <i	class="fa fa-lock form-control-feedback"></i>
+          <div class="check"></div>
+          <div class="bar"></div>
+        </div><!--// user password -->
 
-      <!-- UserID -->
-      <div class="input-container has-feedback">
-        <input type="email" id="id" name="userid" placeholder="E-mail">
-        <div class="check"></div>
-        <div class="bar"></div>
-      </div><!-- UserID end -->
+        <!-- remember user id checkbox-->
+        <div class="checkbox">
+          <label> <input type="checkbox" id="remember-me" checked>
+            <span class="cr"><i class="cr-icon fa fa-rocket"></i></span>
+            Remember me
+          </label>
+        </div><!--// remember user id checkbox -->
 
-      <!-- UserPW -->
-      <div class="input-container has-feedback">
-        <input type="password" id="pw" name="userpw" placeholder="Password" >
-        <div class="check"></div>
-        <div class="bar"></div>
-      </div><!-- UserPW end -->
+        <!-- login btn -->
+        <div class="button-container">
+          <button id="loginBtn" class="rkmd-btn btn-lightBlue ripple-effect float-right" type="submit">
+            <span>Sign in</span>
+          </button>
+        </div><!--// login btn -->
 
-      <!-- 체크박스
-      <div class="checkbox">
-        <label> <input type="checkbox" id="terms" required>
-          <span class="cr"><i class="cr-icon fa fa-rocket"></i></span>
-          I accept something I never read
-        </label>
-      </div><!--  end -->
+        <!-- forgot password btn -->
+        <div class="footer">
+          <a href="#">Forgot your password?</a>
+        </div><!--// forgot password btn -->
 
-      <div class="button-container">
-        <button id="joinButton" type="submit">
-          <span>Register</span>
-        </button>
-      </div>
-    </form>
-  </div><!-- 회원가입 end -->
+      </form>
+    </div><!--// login -->
 
-  <!-- 비밀번호 찾기 -->
-  <div class="card login-reset">
-    <h1 class="title">Reset password</h1>
-    <p class="reset-info">Password reset instruction will be send to
-      your e-mail.</p>
-    <form method="post" action="users/findPw">
+    <!-- Register Member -->
+    <div class="card login-register">
+      <h1 class="title">Create an account</h1>
+      <form id="registerForm" method="post" action="/api/v1/member/register/" >
+        <!-- UserName -->
+        <div class="input-container has-feedback">
+          <input type="text" id="registerMemberName" name="memberName" placeholder="Username"/>
+          <div class="check"></div>
+          <div class="bar"></div>
+        </div><!--// UserName -->
 
-      <div class="input-container has-feedback">
-        <input type="email" id="E-mail" name="userid" required
-               pattern="[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+"
-               title="Not an e-mail!" autocomplete="off" /> <label for="E-mail">E-mail</label>
-        <i class="fa fa-envelope form-control-feedback"></i>
-        <div class="check"></div>
-        <div class="bar"></div>
-      </div>
-      <!-- pattern="[\w_-]{1,20}" -->
-      <div class="input-container has-feedback">
-        <input type="text" id="Username" name="username">
-        <i class="fa fa-envelope form-control-feedback"></i>
-        <div class="check"></div>
-        <div class="bar"></div>
-      </div>
+        <!-- UserID -->
+        <div class="input-container has-feedback">
+          <input type="email" id="registerMemberId" name="memberId" placeholder="E-mail">
+          <div class="check"></div>
+          <div class="bar"></div>
+        </div><!--// UserID -->
 
-      <div class="button-container">
-        <button id="joinButton" type="submit">
-          <span>Reset</span>
-        </button>
-      </div>
-      <div class="footer">
-        <a href="#">Back to Login</a>
-      </div>
-    </form>
-  </div><!-- 비밀번호 찾기 end -->
-</div><!-- 회원 로그인, 회원가입 부분 end -->
+        <!-- UserPW -->
+        <div class="input-container has-feedback">
+          <input type="password" id="registerMemberPassword" name="memberPassword" placeholder="Password" >
+          <div class="check"></div>
+          <div class="bar"></div>
+        </div><!--// UserPW -->
+
+        <div class="checkbox">
+          <label> <input type="checkbox" id="registerTerms" required>
+            <span class="cr"><i class="cr-icon fa fa-rocket"></i></span>
+            I accept something I never read
+          </label>
+        </div>
+
+        <!-- Register Btn -->
+        <div class="button-container">
+          <button id="registerBtn" type="submit">
+            <span>Register</span>
+          </button>
+        </div><!--// Register Btn -->
+
+      </form>
+    </div><!--// Register Member -->
+
+    <!-- forgot password -->
+    <div class="card login-reset">
+      <h1 class="title">Reset password</h1>
+      <p class="reset-info">Password reset instruction will be send to
+        your e-mail.</p>
+      <form id="resetPwForm" method="post" action="/api/v1/member/reset_pw/">
+
+        <!-- E-mail -->
+        <div class="input-container has-feedback">
+          <input type="email" id="memberEmail" name="memberEmail" required
+                 pattern="[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+"
+                 title="Not an e-mail!" autocomplete="off" /> <label for="memberEmail">E-mail</label>
+          <i class="fa fa-envelope form-control-feedback"></i>
+          <div class="check"></div>
+          <div class="bar"></div>
+        </div><!--// E-mail -->
+
+        <!-- pattern="[\w_-]{1,20}" -->
+        <!-- reset password -->
+        <div class="input-container has-feedback">
+          <input type="text" id="resetMemberPassword" name="memberPassword">
+          <i class="fa fa-envelope form-control-feedback"></i>
+          <div class="check"></div>
+          <div class="bar"></div>
+        </div><!--// reset password -->
+
+        <!-- reset Password Btn -->
+        <div class="button-container">
+          <button id="resetPwBtn" type="submit">
+            <span>Reset</span>
+          </button>
+        </div><!--// reset Password Btn -->
+
+        <div class="footer">
+          <a href="#">Back to Login</a>
+        </div>
+      </form>
+    </div><!--// forgot password -->
+  </div><!--// register member and login -->
 
   <footer>
     <th:block th:replace="common/common_footer :: footer_parts()" />
     <!-- JS -->
-    <script th:src="@{/js/guest/sign.js}"></script>
+    <script th:src="@{/js/guest/register.js}"></script>
   </footer>
+
 </body>
 </html>
