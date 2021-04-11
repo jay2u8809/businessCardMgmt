@@ -30,7 +30,7 @@
     </div><!--// change login to registration -->
 
     <!-- login -->
-    <div class="card login-register login-reset">
+    <div class="card login-register login-reset" th:style="${loginPageYn ? 'display: block;' : 'display: none;'}">
       <h1 class="title">Login</h1>
 
       <form id="loginForm"  method="post" action="/api/v1/guest/login/">
@@ -75,12 +75,12 @@
     </div><!--// login -->
 
     <!-- Register Member -->
-    <div class="card login-register">
+    <div class="card login-register" th:style="${loginPageYn ? 'display: none;' : 'display: block;'}">
       <h1 class="title">Create an account</h1>
-      <form id="registerForm" method="post" action="/api/v1/member/register/" >
+      <form id="registerForm" method="post" action="" >
         <!-- UserName -->
         <div class="input-container has-feedback">
-          <input type="text" id="registerMemberName" name="memberName" placeholder="Username"/>
+          <input type="text" id="registerMemberName" name="" placeholder="Username"/>
           <div class="check"></div>
           <div class="bar"></div>
         </div><!--// UserName -->
@@ -158,6 +158,11 @@
 
   <footer>
     <th:block th:replace="common/common_footer :: footer_parts()" />
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+          const registerResult = [[${registerResult}]];
+        /*]]>*/
+    </script>
     <!-- JS -->
     <script th:src="@{/js/guest/register.js}"></script>
   </footer>

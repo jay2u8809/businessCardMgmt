@@ -12,7 +12,7 @@
 	<header class="codrops-header">
 		<div class="codrops-links">
 			<th:block th:if="${loginFlag == false}" >
-					<a class=""  href="users/join">Register</a>
+					<a class=""  href="/api/v1/member/register/">Register</a>
 					<a class=""  href="/api/v1/guest/login/">Login</a>
 			</th:block>
 			<th:block th:if="${loginFlag == true}" >

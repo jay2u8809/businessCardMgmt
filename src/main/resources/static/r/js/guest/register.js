@@ -1,7 +1,7 @@
 /**
  * Login and Register, reset password
  */
-
+/*
 $(function() {
 
 	$('.input-container').find('input').on('keyup blur focus', function(e) {
@@ -43,69 +43,8 @@ $(function() {
 			opacity : "toggle"
 		}, "slow");
 	});
-
-	$("#loginBtn").on("click", () => {
-
-        var loginForm = $("#loginForm");
-        var userId = $("#userid").val();
-        var pw = $("#userpw").val();
-
-
-        if (userId.length == 0) {
-            alert("이메일을 입력해주세요");
-            return false;
-        }
-
-        if (pw.length == 0) {
-            alert('비밀번호 입력해주세요');
-            return false;
-
-        }
-
-        return true;
-
-        $(loginForm).submit();
-    });
-
-    $("#joinButton").on("click",function(){
-
-        var emailReg = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
-
-        var joinForm = $("#joinForm");
-        var username = $("#name").val();
-        var email = $("#id").val();
-        var password = $("#pw").val();
-
-        if (username.length == 0) {
-            alert("이름을 입력해주세요");
-            return false;
-        }
-
-        if (email.length == 0) {
-            alert('이메일을 입력해주세요');
-            return false;
-        }
-
-        if (!(emailReg.test(email))) {
-            alert("XXX@XXX.XXX 양식으로 작성해주세요");
-            return false;
-        }
-
-        if (password.length == 0 ) {
-            alert("비밀번호를 입력해주세요");
-            return false;
-        }
-
-        return true;
-        joinForm.submit();
-
-    });
-
-    function go_url(){
-        location.href="/www";  // 페이지 이동...
-     }
 });
-
+*/
 
 const REGISTER_MEMBER = {
     init: function() {
@@ -113,60 +52,68 @@ const REGISTER_MEMBER = {
 
         // login btn
         $('#loginBtn').on('click', function() {
-            self.register()
+            self.loginProcess()
         });
         // register btn
         $('#registerBtn').on('click', function() {
             self.register()
         });
+
+        if (registerResult != null && registerResult == false) {
+            alert("Fail to Register member");
+        }
     },
     register: () => {
 
-        let emailReg = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
+        let validationUrl = "/api/v1/member/register/check/";
 
-        let registerForm = $("#registerForm");
-        let registerMemberName = $("#registerMemberName").val();
-        let registerMemberId = $("#registerMemberId").val();
-        let registerMemberPassword = $("#registerMemberPassword").val();
+        let form = $('#registerForm');
 
-        if (username.length == 0) {
-            alert("이름을 입력해주세요");
-            return false;
-        }
+        let memberName = $('#registerMemberName').val();
+        $('input[name="memberName1"]').remove();
+        $('<input>').attr({
+            'type': 'hidden',
+            'name': 'memberName1',
+            'value': memberName
+        }).appendTo(form);
 
-        if (email.length == 0) {
-            alert('이메일을 입력해주세요');
-            return false;
-        }
+        let formData = $('#registerForm').serialize();
 
-        if (!(emailReg.test(email))) {
-            alert("XXX@XXX.XXX 양식으로 작성해주세요");
-            return false;
-        }
+        $.ajax({
+            url: validationUrl,
+            type: 'POST',
+            contentType: 'application/x-www-form-urlencoded; charset=utf-8;',
+            data: formData,
+            beforeSend: () => {
 
-        if (password.length == 0 ) {
-            alert("비밀번호를 입력해주세요");
-            return false;
-        }
+            }, success: (result) => {
+                let token = $("meta[name='_csrf']").attr("content") || null;
+                $('<form/>', {
+                    action: result.nextUrl,
+                    method: 'post'
+                }).append($('<input/>', {
+                    type:'hidden',
+                    name:'_csrf',
+                    value: token
+                })).appendTo(document.body)
+                .submit();
+            }, error: (err) => {
 
-        return true;
-        joinForm.submit();
+            }, complete : (data) => {
+
+            }
+        }).done((result) => {
+
+        }).fail((jqXHR, textStatus, errorThrown) => {
+
+        }).always((data) => {
+
+        });
+
     },
-    cancelInput: () => {
+    loginProcess: () => {
 
-        let inputProductName = document.querySelector('#input-productName');
-        let inputProductDesc = document.querySelector('#input-productDesc');
-        let inputProductCode = document.querySelector('#input-productCode');
-        let inputProductPrice = document.querySelector('#input-productPrice');
-        let inputProductSalePrice = document.querySelector('#input-productSalePrice');
-
-        inputProductName.value = '';
-        inputProductDesc.value = '';
-        inputProductCode.value = '';
-        inputProductPrice.value = '';
-        inputProductSalePrice.value = '';
     }
-
 };
 
 REGISTER_MEMBER.init();
