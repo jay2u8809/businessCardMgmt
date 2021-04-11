@@ -1,7 +1,7 @@
 package com.jayian.businesscard.service.businesscard;
 
 import com.jayian.businesscard.common.code.UseYN;
-import com.jayian.businesscard.common.dto.CommonExtends;
+import com.jayian.businesscard.common.CommonExtends;
 import com.jayian.businesscard.domain.businesscard.BusinessCard;
 import com.jayian.businesscard.domain.businesscard.BusinessCardRepository;
 import com.jayian.businesscard.domain.businesscard.QBusinessCard;

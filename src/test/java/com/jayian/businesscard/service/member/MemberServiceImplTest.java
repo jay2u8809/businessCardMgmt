@@ -1,7 +1,7 @@
 package com.jayian.businesscard.service.member;
 
 import com.jayian.businesscard.JpaTestConfiguration;
-import com.jayian.businesscard.common.dto.CommonExtends;
+import com.jayian.businesscard.common.CommonExtends;
 import com.jayian.businesscard.common.dto.EmbeddedName;
 import com.jayian.businesscard.domain.businesscard.BusinessCardRepository;
 import com.jayian.businesscard.domain.member.Member;

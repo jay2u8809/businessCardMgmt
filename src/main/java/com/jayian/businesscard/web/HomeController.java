@@ -1,6 +1,6 @@
 package com.jayian.businesscard.web;
 
-import com.jayian.businesscard.common.dto.CommonExtends;
+import com.jayian.businesscard.common.CommonExtends;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

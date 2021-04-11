@@ -2,7 +2,7 @@ package com.jayian.businesscard.service.ocr;
 
 import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
-import com.jayian.businesscard.common.dto.CommonExtends;
+import com.jayian.businesscard.common.CommonExtends;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
