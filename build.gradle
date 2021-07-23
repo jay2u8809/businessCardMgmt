@@ -58,6 +58,9 @@ dependencies {
     // Google Cloud Vision Api
     implementation group: 'com.google.cloud', name: 'google-cloud-vision', version: googleCloudVisionApiVersion   // https://mvnrepository.com/artifact/com.google.cloud/google-cloud-vision
 
+    // Tesseract : Tess4J
+    implementation group: 'net.sourceforge.tess4j', name: 'tess4j', version: '4.5.4'            // https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j
+
     // Test
 //    implementation 'junit:junit:4.12'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
