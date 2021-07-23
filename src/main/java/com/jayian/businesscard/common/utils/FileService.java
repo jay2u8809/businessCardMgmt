@@ -1,5 +1,6 @@
 package com.jayian.businesscard.common.utils;
 
+import com.jayian.businesscard.common.code.FileType;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -158,7 +159,58 @@ public class FileService {
 //		return false;
     }
 
+    public static File transferMultipartToFile(MultipartFile multipartFile) throws IOException, IllegalStateException {
 
+        if (multipartFile == null || multipartFile.isEmpty()) {
+            return null;
+        }
+
+        File file = new File(generateFileName(multipartFile.getOriginalFilename(), multipartFile.getContentType()));
+        if (!file.createNewFile()) {
+            return null;
+        }
+
+        multipartFile.transferTo(file);
+
+        return file;
+    }
+
+    public static File convertMultipartToFile(MultipartFile multipartFile) throws IOException {
+
+        File file = new File(generateFileName(multipartFile.getOriginalFilename(), multipartFile.getContentType()));
+        if (!file.createNewFile()) {
+            return null;
+        }
+
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(multipartFile.getBytes());
+        fos.close();
+
+        return file;
+    }
+
+    public static String generateFileName(String originalFileName, String contentType) {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        String current_date = simpleDateFormat.format(new Date());
+
+        String fileExtension = "";
+        if (contentType != null) {
+            if (contentType.contains(FileType.JPEG.name()) || contentType.contains(FileType.JPG.name())) {
+                fileExtension = ".jpg";
+            } else if (contentType.contains(FileType.PNG.name())) {
+                fileExtension = ".png";
+            } else if (contentType.contains(FileType.GIF.name())) {
+                fileExtension = ".gif";
+            }
+        }
+
+        return  (originalFileName == null ? "" : originalFileName + "_") +
+                current_date +
+                "_" +
+                System.nanoTime() +
+                fileExtension;
+    }
 
 }
 
