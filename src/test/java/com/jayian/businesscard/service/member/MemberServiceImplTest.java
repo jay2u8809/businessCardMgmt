@@ -47,7 +47,7 @@ class MemberServiceImplTest extends CommonExtends {
 
         Member member = new Member();
         member.setMemberId("TESTID");
-        member.setMemberPassword("TESTPASSWORD");
+        member.setMemberPw("TESTPASSWORD");
         EmbeddedName name = new EmbeddedName();
         name.setSurName("TEST SUR");
         name.setGivenName("TEST GIVEN");
@@ -79,7 +79,7 @@ class MemberServiceImplTest extends CommonExtends {
         while(idx < 10) {
             Member member = new Member();
             member.setMemberId("TEST_ID" + idx);
-            member.setMemberPassword("TESTPW");
+            member.setMemberPw("TESTPW");
             Member savedMember = memberService.saveMember(member);
             result.add(savedMember);
             idx++;

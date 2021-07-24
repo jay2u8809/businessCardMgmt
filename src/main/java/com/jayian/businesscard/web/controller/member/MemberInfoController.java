@@ -5,7 +5,7 @@ import com.jayian.businesscard.common.CommonExtends;
 import com.jayian.businesscard.common.utils.CookieUtils;
 import com.jayian.businesscard.domain.member.Member;
 import com.jayian.businesscard.service.member.MemberService;
-import com.jayian.businesscard.web.dto.member.MemberDto;
+import com.jayian.businesscard.web.dto.member.MemberJoinDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,15 +26,16 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
+@RequestMapping("/api/v1/member")
 public class MemberInfoController extends CommonExtends {
 
     private final MemberService memberService;
 
-    private final MemberDto.Validator memberDtoValidator;
+    private final MemberJoinDto.Validator memberDtoValidator;
 
     private final String REGISTER_DATA = "registerData";
 
-    @GetMapping("/api/v1/guest/login/")
+    @GetMapping("/login/")
     public String moveLogin(Model model) {
 
         logger.debug("Move Login Page");
@@ -44,7 +45,7 @@ public class MemberInfoController extends CommonExtends {
     }
 
 
-    @PostMapping("/api/v1/guest/login/")
+    @PostMapping("/login/")
     public String loginProcess(Model model) {
 
         return "";
@@ -56,7 +57,7 @@ public class MemberInfoController extends CommonExtends {
      * @param model
      * @return
      */
-    @GetMapping("/api/v1/member/register/")
+    @GetMapping("/register/")
     public String registerMember(Model model) {
 
         logger.debug("Move Register Member Page");
@@ -66,12 +67,12 @@ public class MemberInfoController extends CommonExtends {
     }
 
 
-    @PostMapping(value = "/api/v1/member/register/check/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/register/check/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseBody
-    public ResponseEntity<?> registerDataCheck(HttpServletRequest req, @Valid MemberDto memberDto, BindingResult bindingResult) {
+    public ResponseEntity<?> registerDataCheck(HttpServletRequest req, @Valid MemberJoinDto memberJoinDto, BindingResult bindingResult) {
 
         // validating check
-        Map<String, Object> result = this.memberDataValidate(memberDto, bindingResult);
+        Map<String, Object> result = this.memberDataValidate(memberJoinDto, bindingResult);
 
         // validating error
         if (bindingResult.hasErrors()) {
@@ -89,7 +90,7 @@ public class MemberInfoController extends CommonExtends {
             }
 
             HttpSession session = getSession(req);
-            session.setAttribute(REGISTER_DATA, memberDto);
+            session.setAttribute(REGISTER_DATA, memberJoinDto);
 
             // Home Url
             String nextUrl = "/api/v1/member/register/";
@@ -105,11 +106,11 @@ public class MemberInfoController extends CommonExtends {
      * @param req
      * @return
      */
-    @PostMapping("/api/v1/member/register/")
+    @PostMapping("/register/")
     public String registerMember(HttpServletRequest req, Model model) {
 
         HttpSession session = getSession(req);
-        MemberDto registerMemberInfo = (MemberDto) session.getAttribute(REGISTER_DATA);
+        MemberJoinDto registerMemberInfo = (MemberJoinDto) session.getAttribute(REGISTER_DATA);
         if (registerMemberInfo == null) {
             model.addAttribute("registerResult", false);
             model.addAttribute("loginPageYn", false);
@@ -128,7 +129,7 @@ public class MemberInfoController extends CommonExtends {
      * @param memberId
      * @return
      */
-    @PatchMapping("/api/vi/member/verify/")
+    @PatchMapping("/verify/")
     public ResponseEntity<?> verifyMember(@RequestParam String memberId) {
 
         logger.debug("Member Verified : {}", memberId);
@@ -149,11 +150,11 @@ public class MemberInfoController extends CommonExtends {
      * Signup Form Validation
      * @return
      */
-    private Map<String, Object> memberDataValidate(MemberDto memberDto, BindingResult bindingResult) {
+    private Map<String, Object> memberDataValidate(MemberJoinDto memberJoinDto, BindingResult bindingResult) {
 
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
 
-        this.validate(memberDto, bindingResult, memberDtoValidator);
+        this.validate(memberJoinDto, bindingResult, memberDtoValidator);
         if (bindingResult.hasErrors()) {
             super.bindErrorResult(bindingResult, result);
         }
@@ -169,7 +170,7 @@ public class MemberInfoController extends CommonExtends {
      * @param validators the _validators
      * @return the binding result
      */
-    private BindingResult validate(MemberDto target, BindingResult bindingResult, Validator... validators) {
+    private BindingResult validate(MemberJoinDto target, BindingResult bindingResult, Validator... validators) {
 
         for (Validator validator : validators) {
             validator.validate(target, bindingResult);

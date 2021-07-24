@@ -1,6 +1,5 @@
 package com.jayian.businesscard.service.member;
 
-import com.jayian.businesscard.common.code.UseYN;
 import com.jayian.businesscard.common.CommonExtends;
 import com.jayian.businesscard.domain.member.Member;
 import com.jayian.businesscard.domain.member.MemberRepository;
@@ -31,7 +30,7 @@ public class MemberServiceImpl extends CommonExtends implements MemberService {
 
         if (withdrawalMember == null)   return 0L;
 
-        withdrawalMember.setWithdrawalYn(UseYN.Y);
+//        withdrawalMember.setWithdrawalYn(UseYN.Y);
         return memberRepository.save(withdrawalMember).getMemberSn();
     }
 
@@ -42,7 +41,7 @@ public class MemberServiceImpl extends CommonExtends implements MemberService {
                         .select(qMember)
                         .from(qMember)
                         .where(qMember.memberSn.eq(memberSn)
-                                .and(qMember.withdrawalYn.eq(UseYN.N))
+//                                .and(qMember.withdrawalYn.eq(UseYN.N))
 //                                .and(qMember.emailVerifyYn.eq(YN.Y))
                         ).fetchFirst();
         return member;

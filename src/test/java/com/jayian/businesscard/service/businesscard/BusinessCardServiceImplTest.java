@@ -58,7 +58,7 @@ public class BusinessCardServiceImplTest extends CommonExtends {
 
         Member member = new Member();
         member.setMemberId("TEST_ID");
-        member.setMemberPassword("TESTPW");
+        member.setMemberPw("TESTPW");
         Member savedMember = memberService.saveMember(member);
 
         logger.info("SAVED MEMBER : {}", savedMember.getMemberId());
@@ -121,7 +121,7 @@ public class BusinessCardServiceImplTest extends CommonExtends {
 
         Member member = new Member();
         member.setMemberId("TEST_ID");
-        member.setMemberPassword("TESTPW");
+        member.setMemberPw("TESTPW");
         Member savedMember = memberService.saveMember(member);
 
         List<BusinessCard> result = new ArrayList<>();

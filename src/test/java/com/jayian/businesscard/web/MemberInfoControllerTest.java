@@ -1,16 +1,16 @@
 package com.jayian.businesscard.web;
 
 import com.jayian.businesscard.JpaTestConfiguration;
-import com.jayian.businesscard.common.dto.CommonExtends;
+import com.jayian.businesscard.common.CommonExtends;
 import com.jayian.businesscard.domain.member.Member;
 import com.jayian.businesscard.domain.member.MemberRepository;
 import com.jayian.businesscard.service.member.MemberService;
 import com.jayian.businesscard.service.member.MemberServiceImpl;
-import com.jayian.businesscard.web.dto.MemberDto;
+import com.jayian.businesscard.web.dto.member.MemberJoinDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -18,14 +18,14 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Import(JpaTestConfiguration.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 //@WebMvcTest(controllers = MemberInfoController.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class MemberInfoControllerTest extends CommonExtends {
@@ -55,14 +55,14 @@ class MemberInfoControllerTest extends CommonExtends {
         String memberId = "TEST_ID";
         String memberPw = "TEST_PW";
 
-        MemberDto memberDto = new MemberDto();
-        memberDto.setMemberId(memberId);
-        memberDto.setMemberPassword(memberPw);
+        MemberJoinDto memberJoinDto = new MemberJoinDto();
+        memberJoinDto.setMemberId(memberId);
+        memberJoinDto.setMemberPw(memberPw);
 
         String url = "http://localhost:" + port + "/api/v1/member/register/";
 
         // when
-        ResponseEntity<Map> responseEntity = restTemplate.postForEntity(url, memberDto, Map.class);
+        ResponseEntity<Map> responseEntity = restTemplate.postForEntity(url, memberJoinDto, Map.class);
 
         //then
         Map<String, Long> ret = responseEntity.getBody();
@@ -80,6 +80,6 @@ class MemberInfoControllerTest extends CommonExtends {
 
         Member member = memberService.getNormalMember(memberSn);
         assertThat(member.getMemberId()).isEqualTo(memberId);
-        assertThat(member.getMemberPassword()).isEqualTo(memberPw);
+        assertThat(member.getMemberPw()).isEqualTo(memberPw);
     }
 }

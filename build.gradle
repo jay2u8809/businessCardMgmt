@@ -54,7 +54,11 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     // DB
-    runtimeOnly 'com.h2database:h2'
+    // H2
+//    runtimeOnly 'com.h2database:h2'
+    // PostgreSQL
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.18'          // https://mvnrepository.com/artifact/org.postgresql/postgresql
+
     // Google Cloud Vision Api
     implementation group: 'com.google.cloud', name: 'google-cloud-vision', version: googleCloudVisionApiVersion   // https://mvnrepository.com/artifact/com.google.cloud/google-cloud-vision
 

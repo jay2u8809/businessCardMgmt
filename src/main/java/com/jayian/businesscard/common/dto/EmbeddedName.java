@@ -13,16 +13,16 @@ import java.util.Objects;
 @Embeddable
 public class EmbeddedName implements Serializable {
 
-    @Column(name = "given_name", length = 100)
+    @Column(name = "name_1", length = 100)
     private String givenName;
 
-    @Column(name = "sur_name", length = 100)
+    @Column(name = "name_2", length = 100)
     private String surName;
 
-    @Column(name = "given_name_en", length = 100)
+    @Column(name = "name_3", length = 100)
     private String givenNameEn;
 
-    @Column(name = "sur_name_en", length = 100)
+    @Column(name = "name_4", length = 100)
     private String surNameEn;
 
     public EmbeddedName() {
